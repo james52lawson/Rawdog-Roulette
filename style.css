@@ -228,6 +228,104 @@ main { flex: 1; }
   background: var(--phase-color, var(--accent));
 }
 
+/* ---------- calendar ---------- */
+
+.cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.cal-title {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.cal-wd {
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--muted);
+  padding: 2px 0;
+}
+
+.cal-day {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  border-radius: 50%;
+  border: 1px solid transparent;
+}
+
+.cal-day.p-log {
+  background: var(--menstrual);
+  color: #fff;
+  font-weight: 700;
+}
+
+.cal-day.p-pred {
+  background: rgba(242, 96, 122, 0.16);
+  color: var(--menstrual);
+  border: 1px dashed rgba(242, 96, 122, 0.6);
+}
+
+.cal-day.o-est::after,
+.cal-day.o-pred::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.cal-day.o-est::after { background: var(--ovulation); }
+.cal-day.o-pred::after { border: 1px solid var(--ovulation); width: 4px; height: 4px; }
+
+.cal-day.is-today { box-shadow: 0 0 0 2px var(--text); }
+
+.cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 12px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.cal-legend .lg {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: -1px;
+}
+
+.lg-period { background: var(--menstrual); }
+.lg-period-pred {
+  background: rgba(242, 96, 122, 0.16);
+  border: 1px dashed rgba(242, 96, 122, 0.6);
+}
+.lg-ov { background: var(--ovulation); }
+.lg-ov-pred { border: 1px solid var(--ovulation); }
+
 /* ---------- forms & buttons ---------- */
 
 label {

@@ -205,6 +205,88 @@ const PHASES = {
   }
 };
 
+/* ================= calendar ================= */
+
+// Marks every relevant day with period/ovulation info.
+// Past: logged period days; ovulation back-calculated as next logged start − 14
+// (the luteal phase is the stable half of the cycle, so this beats counting
+// forward). Future: cycles projected from the latest start, ~6 months out.
+function buildMarks(data) {
+  const marks = {};
+  const get = iso => (marks[iso] = marks[iso] || {});
+  const starts = [...data.periodStarts].sort();
+  const P = data.periodLength;
+  const L = effectiveCycleLength(data);
+
+  for (const s of starts) {
+    for (let i = 0; i < P; i++) get(addDays(s, i)).period = 'logged';
+  }
+  for (let i = 1; i < starts.length; i++) {
+    const gap = daysBetween(starts[i - 1], starts[i]);
+    if (gap >= 15 && gap <= 60) get(addDays(starts[i], -14)).ov = 'est';
+  }
+  if (starts.length) {
+    const last = starts[starts.length - 1];
+    const horizon = addDays(todayISO(), 183);
+    for (let k = 0; k < 12; k++) {
+      const cs = addDays(last, k * L);
+      if (cs > horizon) break;
+      if (k > 0) {
+        for (let i = 0; i < P; i++) {
+          const cell = get(addDays(cs, i));
+          if (!cell.period) cell.period = 'predicted';
+        }
+      }
+      const ovCell = get(addDays(cs, L - 14));
+      if (!ovCell.ov) ovCell.ov = 'pred';
+    }
+  }
+  return marks;
+}
+
+let calYear, calMonth;
+
+function renderCalendar(data) {
+  const marks = buildMarks(data);
+  const today = todayISO();
+  const first = new Date(calYear, calMonth, 1, 12);
+  $('calTitle').textContent = first.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const lead = (first.getDay() + 6) % 7; // Monday-first grid
+  const grid = $('calGrid');
+  grid.innerHTML = '';
+
+  for (const wd of ['M', 'T', 'W', 'T', 'F', 'S', 'S']) {
+    const el = document.createElement('div');
+    el.className = 'cal-wd';
+    el.textContent = wd;
+    grid.appendChild(el);
+  }
+  for (let i = 0; i < lead; i++) grid.appendChild(document.createElement('div'));
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const iso = toISO(new Date(calYear, calMonth, d, 12));
+    const m = marks[iso] || {};
+    const el = document.createElement('div');
+    let cls = 'cal-day';
+    if (m.period === 'logged') cls += ' p-log';
+    else if (m.period === 'predicted') cls += ' p-pred';
+    if (m.ov === 'est') cls += ' o-est';
+    else if (m.ov === 'pred') cls += ' o-pred';
+    if (iso === today) cls += ' is-today';
+    el.className = cls;
+    el.textContent = d;
+    grid.appendChild(el);
+  }
+}
+
+function calGoTo(year, month) {
+  calYear = year;
+  calMonth = month;
+  renderCalendar(loadData());
+}
+
 /* ================= rendering ================= */
 
 const $ = id => document.getElementById(id);
@@ -284,6 +366,12 @@ function renderDashboard(data) {
   // suggestions
   $('suggestions').innerHTML = content.suggestions
     .map(t => `<li>${t}</li>`).join('');
+
+  // calendar (reset to the current month on full dashboard render)
+  const now = new Date();
+  calYear = now.getFullYear();
+  calMonth = now.getMonth();
+  renderCalendar(data);
 }
 
 function renderSettings(data) {
@@ -386,6 +474,17 @@ function initEvents() {
       saveData(data);
     }
     renderSettings(data);
+  });
+
+  $('calPrev').addEventListener('click', () => {
+    calGoTo(calMonth === 0 ? calYear - 1 : calYear, (calMonth + 11) % 12);
+  });
+  $('calNext').addEventListener('click', () => {
+    calGoTo(calMonth === 11 ? calYear + 1 : calYear, (calMonth + 1) % 12);
+  });
+  $('calTitle').addEventListener('click', () => {
+    const n = new Date();
+    calGoTo(n.getFullYear(), n.getMonth());
   });
 
   $('clearBtn').addEventListener('click', () => {
