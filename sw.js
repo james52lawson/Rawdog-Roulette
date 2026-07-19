@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'cycle-companion-v4';
+const CACHE = 'cycle-companion-v5';
 const ASSETS = [
   './',
   './index.html',
@@ -14,7 +14,11 @@ const ASSETS = [
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
+    caches.open(CACHE)
+      // cache: 'reload' bypasses the HTTP cache, otherwise a new SW version
+      // can pre-cache stale files served under GitHub Pages' 10-min max-age
+      .then(c => c.addAll(ASSETS.map(u => new Request(u, { cache: 'reload' }))))
+      .then(() => self.skipWaiting())
   );
 });
 
