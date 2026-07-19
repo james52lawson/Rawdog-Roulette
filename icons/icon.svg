@@ -1,14 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#12101a"/>
-  <g transform="rotate(-90 256 256)">
-    <circle cx="256" cy="256" r="140" fill="none" stroke="#f2607a" stroke-width="46"
-            pathLength="100" stroke-dasharray="19 81" stroke-dashoffset="0" stroke-linecap="round"/>
-    <circle cx="256" cy="256" r="140" fill="none" stroke="#4cd4a9" stroke-width="46"
-            pathLength="100" stroke-dasharray="19 81" stroke-dashoffset="-25" stroke-linecap="round"/>
-    <circle cx="256" cy="256" r="140" fill="none" stroke="#f5b942" stroke-width="46"
-            pathLength="100" stroke-dasharray="19 81" stroke-dashoffset="-50" stroke-linecap="round"/>
-    <circle cx="256" cy="256" r="140" fill="none" stroke="#9d8cff" stroke-width="46"
-            pathLength="100" stroke-dasharray="19 81" stroke-dashoffset="-75" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" shape-rendering="crispEdges">
+  <g transform="scale(32)">
+    <!-- teal desktop -->
+    <rect x="0" y="0" width="16" height="16" fill="#008080"/>
+    <!-- window face with pixel bevel -->
+    <rect x="0.5" y="0.5" width="15" height="15" fill="#c0c0c0"/>
+    <rect x="0.5" y="0.5" width="15" height="0.5" fill="#ffffff"/>
+    <rect x="0.5" y="0.5" width="0.5" height="15" fill="#ffffff"/>
+    <rect x="0.5" y="15" width="15" height="0.5" fill="#404040"/>
+    <rect x="15" y="0.5" width="0.5" height="15" fill="#404040"/>
+    <!-- title bar -->
+    <rect x="1" y="1" width="14" height="2" fill="#000080"/>
+    <!-- close button -->
+    <rect x="13.2" y="1.3" width="1.5" height="1.4" fill="#c0c0c0"/>
+    <!-- pixel heart, quartered in the 4 phase colors -->
+    <!-- top-left: menstrual red -->
+    <rect x="4" y="4" width="2" height="1" fill="#c00000"/>
+    <rect x="3" y="5" width="4" height="1" fill="#c00000"/>
+    <rect x="3" y="6" width="5" height="2" fill="#c00000"/>
+    <!-- top-right: follicular green -->
+    <rect x="10" y="4" width="2" height="1" fill="#008000"/>
+    <rect x="9" y="5" width="4" height="1" fill="#008000"/>
+    <rect x="8" y="6" width="5" height="2" fill="#008000"/>
+    <!-- bottom-left: ovulation orange -->
+    <rect x="3" y="8" width="5" height="1" fill="#b06000"/>
+    <rect x="4" y="9" width="4" height="1" fill="#b06000"/>
+    <rect x="5" y="10" width="3" height="1" fill="#b06000"/>
+    <rect x="6" y="11" width="2" height="1" fill="#b06000"/>
+    <rect x="7" y="12" width="1" height="1" fill="#b06000"/>
+    <!-- bottom-right: luteal purple -->
+    <rect x="8" y="8" width="5" height="1" fill="#800080"/>
+    <rect x="8" y="9" width="4" height="1" fill="#800080"/>
+    <rect x="8" y="10" width="3" height="1" fill="#800080"/>
+    <rect x="8" y="11" width="2" height="1" fill="#800080"/>
+    <rect x="8" y="12" width="1" height="1" fill="#800080"/>
+    <!-- highlight -->
+    <rect x="4" y="5" width="1" height="1" fill="#ff9999"/>
+    <rect x="4" y="6" width="1" height="2" fill="#ff9999"/>
   </g>
-  <circle cx="256" cy="256" r="46" fill="#ece9f4"/>
 </svg>

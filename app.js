@@ -177,11 +177,11 @@ function conceptionLikelihood(day, O) {
   const off = day - O;
   const pct = CONCEPTION_TABLE[String(off)] ?? 1;
   let level, color;
-  if (pct >= 28)      { level = 'Peak';     color = '#f2607a'; }
-  else if (pct >= 20) { level = 'High';     color = '#f08a3c'; }
-  else if (pct >= 10) { level = 'Moderate'; color = '#f5b942'; }
-  else if (pct >= 3)  { level = 'Low';      color = '#4cd4a9'; }
-  else                { level = 'Very low'; color = '#6b6580'; }
+  if (pct >= 28)      { level = 'Peak';     color = '#c00000'; }
+  else if (pct >= 20) { level = 'High';     color = '#e07000'; }
+  else if (pct >= 10) { level = 'Moderate'; color = '#b08000'; }
+  else if (pct >= 3)  { level = 'Low';      color = '#008000'; }
+  else                { level = 'Very low'; color = '#808080'; }
   return { pct, level, color };
 }
 
@@ -540,6 +540,7 @@ function initEvents() {
   });
 
   $('backBtn').addEventListener('click', () => render());
+  $('settingsClose').addEventListener('click', () => render());
 
   $('logBtn').addEventListener('click', () => {
     const iso = $('logDate').value;

@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'cycle-companion-v6';
+const CACHE = 'cycle-companion-v7';
 const ASSETS = [
   './',
   './index.html',
@@ -9,7 +9,9 @@ const ASSETS = [
   './manifest.webmanifest',
   './icons/icon.svg',
   './icons/icon-192.png',
-  './icons/icon-512.png'
+  './icons/icon-512.png',
+  './fonts/ms_sans_serif.woff2',
+  './fonts/ms_sans_serif_bold.woff2'
 ];
 
 self.addEventListener('install', e => {

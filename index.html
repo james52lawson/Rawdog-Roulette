@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#12101a">
+<meta name="theme-color" content="#000080">
 <title>Cycle Companion</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="stylesheet" href="style.css">
@@ -12,83 +12,114 @@
 </head>
 <body>
 <header class="app-header">
-  <h1>Cycle Companion</h1>
-  <button id="settingsBtn" class="icon-btn" aria-label="Settings" hidden>&#9881;</button>
+  <h1>&#128190; Cycle Companion</h1>
+  <button id="settingsBtn" class="btn" hidden>Settings</button>
 </header>
 
 <main id="app">
 
   <!-- First-run setup -->
-  <section id="setupView" class="card" hidden>
-    <h2>Welcome</h2>
-    <p class="muted">Everything stays on this phone — nothing is ever uploaded.</p>
-    <form id="setupForm">
-      <label for="setupDate">First day of last period</label>
-      <input type="date" id="setupDate" required>
-      <label for="setupLength">Average cycle length (days)</label>
-      <input type="number" id="setupLength" min="21" max="40" value="28" required>
-      <button type="submit" class="btn primary block">Start tracking</button>
-    </form>
+  <section id="setupView" class="window" hidden>
+    <div class="titlebar">
+      <span class="tb-caption">welcome.exe</span>
+      <span class="tb-controls"><span class="tb-btn">_</span><span class="tb-btn">&#9633;</span><span class="tb-btn">&#215;</span></span>
+    </div>
+    <div class="window-body">
+      <p class="muted">Everything stays on this phone &mdash; nothing is ever uploaded.</p>
+      <form id="setupForm">
+        <label for="setupDate">First day of last period</label>
+        <input type="date" id="setupDate" required>
+        <label for="setupLength">Average cycle length (days)</label>
+        <input type="number" id="setupLength" min="21" max="40" value="28" required>
+        <button type="submit" class="btn primary block">Start tracking</button>
+      </form>
+    </div>
   </section>
 
   <!-- Dashboard -->
   <div id="dashboard" hidden>
-    <section class="card status-card">
-      <p class="day-label">Day <span id="dayNum"></span> of <span id="cycleLen"></span></p>
-      <p class="phase-name" id="phaseName"></p>
-      <p class="sub-phase" id="subPhaseName"></p>
-      <p class="fertile-badge" id="fertileBadge" hidden>&#10024; Fertile window</p>
-      <div class="timeline" id="timeline" aria-hidden="true"></div>
-      <ul class="countdowns" id="countdowns"></ul>
-    </section>
-
-    <section class="card">
-      <h2>Pregnancy likelihood</h2>
-      <p class="muted preg-caption">Chance of conception from unprotected sex today, based on cycle timing:</p>
-      <div class="preg-row">
-        <span class="preg-pct" id="pregPct"></span>
-        <span class="level-badge" id="pregLevel"></span>
+    <section class="window">
+      <div class="titlebar">
+        <span class="tb-caption">cycle_status.exe</span>
+        <span class="tb-controls"><span class="tb-btn">_</span><span class="tb-btn">&#9633;</span><span class="tb-btn">&#215;</span></span>
       </div>
-      <div class="meter"><div class="meter-fill" id="pregMeter"></div></div>
-      <p class="hint">Population averages against the predicted ovulation day. Real ovulation shifts cycle to cycle, so no day is truly zero — this is not a contraception method.</p>
-    </section>
-
-    <section class="card">
-      <h2>What's happening</h2>
-      <dl class="intel">
-        <div class="intel-row">
-          <dt>Hormones</dt>
-          <dd id="hormones"></dd>
-        </div>
-        <div class="intel-row">
-          <dt>Energy</dt>
-          <dd><span class="level-badge" id="energyLevel"></span> <span id="energyNote"></span></dd>
-        </div>
-        <div class="intel-row">
-          <dt>Mood &amp; social battery</dt>
-          <dd id="mood"></dd>
-        </div>
-      </dl>
-    </section>
-
-    <section class="card">
-      <h2>How to show up</h2>
-      <ul id="suggestions" class="suggestions"></ul>
-    </section>
-
-    <section class="card">
-      <h2>Month view</h2>
-      <div class="cal-head">
-        <button id="calPrev" class="icon-btn" aria-label="Previous month">&#9664;</button>
-        <button id="calTitle" class="cal-title" aria-label="Back to current month"></button>
-        <button id="calNext" class="icon-btn" aria-label="Next month">&#9654;</button>
+      <div class="window-body status-body">
+        <p class="day-label">Day <span id="dayNum"></span> of <span id="cycleLen"></span></p>
+        <p class="phase-name" id="phaseName"></p>
+        <p class="sub-phase" id="subPhaseName"></p>
+        <p class="fertile-badge" id="fertileBadge" hidden>&#9888; Fertile window</p>
+        <div class="timeline" id="timeline" aria-hidden="true"></div>
+        <ul class="countdowns" id="countdowns"></ul>
       </div>
-      <div class="cal-grid" id="calGrid"></div>
-      <div class="cal-legend">
-        <span><i class="lg lg-period"></i>Period</span>
-        <span><i class="lg lg-period-pred"></i>Period (expected)</span>
-        <span><i class="lg lg-ov"></i>Ovulation (est.)</span>
-        <span><i class="lg lg-ov-pred"></i>Ovulation (expected)</span>
+    </section>
+
+    <section class="window">
+      <div class="titlebar">
+        <span class="tb-caption">pregnancy.exe</span>
+        <span class="tb-controls"><span class="tb-btn">_</span><span class="tb-btn">&#9633;</span><span class="tb-btn">&#215;</span></span>
+      </div>
+      <div class="window-body">
+        <p class="muted preg-caption">Chance of conception from unprotected sex today, based on cycle timing:</p>
+        <div class="preg-row">
+          <span class="preg-pct" id="pregPct"></span>
+          <span class="level-badge" id="pregLevel"></span>
+        </div>
+        <div class="meter"><div class="meter-fill" id="pregMeter"></div></div>
+        <p class="hint">Population averages against the predicted ovulation day. Real ovulation shifts cycle to cycle, so no day is truly zero &mdash; this is not a contraception method.</p>
+      </div>
+    </section>
+
+    <section class="window">
+      <div class="titlebar">
+        <span class="tb-caption">intel.txt - Notepad</span>
+        <span class="tb-controls"><span class="tb-btn">_</span><span class="tb-btn">&#9633;</span><span class="tb-btn">&#215;</span></span>
+      </div>
+      <div class="window-body">
+        <dl class="intel">
+          <div class="intel-row">
+            <dt>Hormones</dt>
+            <dd id="hormones"></dd>
+          </div>
+          <div class="intel-row">
+            <dt>Energy</dt>
+            <dd><span class="level-badge" id="energyLevel"></span> <span id="energyNote"></span></dd>
+          </div>
+          <div class="intel-row">
+            <dt>Mood &amp; social battery</dt>
+            <dd id="mood"></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="window">
+      <div class="titlebar">
+        <span class="tb-caption">how_to_show_up.doc</span>
+        <span class="tb-controls"><span class="tb-btn">_</span><span class="tb-btn">&#9633;</span><span class="tb-btn">&#215;</span></span>
+      </div>
+      <div class="window-body">
+        <ul id="suggestions" class="suggestions"></ul>
+      </div>
+    </section>
+
+    <section class="window">
+      <div class="titlebar">
+        <span class="tb-caption">calendar.exe</span>
+        <span class="tb-controls"><span class="tb-btn">_</span><span class="tb-btn">&#9633;</span><span class="tb-btn">&#215;</span></span>
+      </div>
+      <div class="window-body">
+        <div class="cal-head">
+          <button id="calPrev" class="btn cal-nav" aria-label="Previous month">&#9668;</button>
+          <button id="calTitle" class="cal-title" aria-label="Back to current month"></button>
+          <button id="calNext" class="btn cal-nav" aria-label="Next month">&#9658;</button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-legend">
+          <span><i class="lg lg-period"></i>Period</span>
+          <span><i class="lg lg-period-pred"></i>Period (expected)</span>
+          <span><i class="lg lg-ov"></i>Ovulation (est.)</span>
+          <span><i class="lg lg-ov-pred"></i>Ovulation (expected)</span>
+        </div>
       </div>
     </section>
 
@@ -96,41 +127,45 @@
   </div>
 
   <!-- Settings -->
-  <section id="settingsView" class="card" hidden>
-    <h2>Settings</h2>
-
-    <div class="setting">
-      <label for="logDate">Log a period start</label>
-      <div class="row">
-        <input type="date" id="logDate">
-        <button id="logBtn" class="btn">Add</button>
+  <section id="settingsView" class="window" hidden>
+    <div class="titlebar">
+      <span class="tb-caption">settings.ini</span>
+      <span class="tb-controls"><span class="tb-btn">_</span><span class="tb-btn">&#9633;</span><button class="tb-btn" id="settingsClose" aria-label="Close settings">&#215;</button></span>
+    </div>
+    <div class="window-body">
+      <div class="setting">
+        <label for="logDate">Log a period start</label>
+        <div class="row">
+          <input type="date" id="logDate">
+          <button id="logBtn" class="btn">Add</button>
+        </div>
       </div>
-    </div>
 
-    <div class="setting">
-      <h3>Logged period starts</h3>
-      <ul id="historyList" class="history"></ul>
-    </div>
+      <div class="setting">
+        <h3>Logged period starts</h3>
+        <ul id="historyList" class="history"></ul>
+      </div>
 
-    <div class="setting">
-      <label for="cycleLenInput">Cycle length (days)</label>
-      <input type="number" id="cycleLenInput" min="21" max="40">
-      <p class="hint" id="cycleLenHint"></p>
-    </div>
+      <div class="setting">
+        <label for="cycleLenInput">Cycle length (days)</label>
+        <input type="number" id="cycleLenInput" min="21" max="40">
+        <p class="hint" id="cycleLenHint"></p>
+      </div>
 
-    <div class="setting">
-      <label for="periodLenInput">Period length (days)</label>
-      <input type="number" id="periodLenInput" min="2" max="10">
-    </div>
+      <div class="setting">
+        <label for="periodLenInput">Period length (days)</label>
+        <input type="number" id="periodLenInput" min="2" max="10">
+      </div>
 
-    <button id="clearBtn" class="btn danger block">Erase all data</button>
-    <button id="backBtn" class="btn block">Back to dashboard</button>
+      <button id="clearBtn" class="btn danger block">Erase all data</button>
+      <button id="backBtn" class="btn block">Back to dashboard</button>
+    </div>
   </section>
 
 </main>
 
 <footer>
-  <p class="muted">Estimates only — not medical advice, and not reliable for contraception.</p>
+  <div class="statusbar"><span>Estimates only &mdash; not medical advice, and not reliable for contraception.</span></div>
 </footer>
 
 <script src="app.js"></script>
