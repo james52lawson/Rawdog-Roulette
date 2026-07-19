@@ -1,0 +1,303 @@
+:root {
+  --bg: #12101a;
+  --card: #1c1926;
+  --card-edge: #2a2638;
+  --text: #ece9f4;
+  --muted: #9a93ad;
+  --accent: #f2607a;
+  --menstrual: #f2607a;
+  --follicular: #4cd4a9;
+  --ovulation: #f5b942;
+  --luteal: #9d8cff;
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 4px 6px;
+}
+
+.app-header h1 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.35rem;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+main { flex: 1; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-edge);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.card h2 {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.muted { color: var(--muted); font-size: 0.85rem; }
+
+/* ---------- status card ---------- */
+
+.status-card { text-align: center; }
+
+.day-label {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.phase-name {
+  margin: 2px 0 6px;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--phase-color, var(--text));
+}
+
+.fertile-badge {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: rgba(245, 185, 66, 0.15);
+  color: var(--ovulation);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.timeline {
+  position: relative;
+  display: flex;
+  gap: 3px;
+  height: 10px;
+  margin: 12px 0 4px;
+}
+
+.timeline .seg {
+  height: 100%;
+  border-radius: 5px;
+  opacity: 0.35;
+}
+
+.timeline .seg.current { opacity: 1; }
+
+.timeline .marker {
+  position: absolute;
+  top: -4px;
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  background: #fff;
+  transform: translateX(-50%);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+.countdowns {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.countdowns li { margin-top: 3px; }
+.countdowns strong { color: var(--text); font-weight: 600; }
+
+/* ---------- intel ---------- */
+
+.intel { margin: 0; }
+
+.intel-row { padding: 8px 0; }
+.intel-row + .intel-row { border-top: 1px solid var(--card-edge); }
+
+.intel-row dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+
+.intel-row dd { margin: 0; font-size: 0.95rem; }
+
+.level-badge {
+  display: inline-block;
+  padding: 1px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: var(--phase-color, var(--muted));
+  color: #12101a;
+  margin-right: 4px;
+}
+
+/* ---------- suggestions ---------- */
+
+.suggestions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.suggestions li {
+  position: relative;
+  padding: 6px 0 6px 22px;
+  font-size: 0.95rem;
+}
+
+.suggestions li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--phase-color, var(--accent));
+}
+
+/* ---------- forms & buttons ---------- */
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 12px 0 4px;
+}
+
+input[type="date"],
+input[type="number"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--card-edge);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.row { display: flex; gap: 8px; }
+.row input { flex: 1; }
+
+.btn {
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--card-edge);
+  background: var(--card);
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.btn.danger {
+  background: none;
+  border-color: rgba(242, 96, 122, 0.5);
+  color: var(--menstrual);
+}
+
+.btn.block {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+}
+
+.btn:active { filter: brightness(1.15); }
+
+/* ---------- settings ---------- */
+
+.setting { margin-bottom: 16px; }
+
+.setting h3 {
+  margin: 12px 0 6px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.history li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--card-edge);
+  font-size: 0.95rem;
+}
+
+.history .del {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1rem;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+.hint { font-size: 0.8rem; color: var(--muted); margin: 6px 0 0; }
+
+footer {
+  text-align: center;
+  padding: 8px 0 18px;
+}
+
+/* phase color helpers applied via JS on body */
+body.phase-menstrual { --phase-color: var(--menstrual); }
+body.phase-follicular { --phase-color: var(--follicular); }
+body.phase-ovulation { --phase-color: var(--ovulation); }
+body.phase-luteal { --phase-color: var(--luteal); }
