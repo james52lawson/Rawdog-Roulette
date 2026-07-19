@@ -173,6 +173,36 @@ main { flex: 1; }
   margin-right: 4px;
 }
 
+/* ---------- pregnancy likelihood ---------- */
+
+.preg-caption { margin: 0 0 8px; }
+
+.preg-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.preg-pct {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.meter {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
 /* ---------- suggestions ---------- */
 
 .suggestions {

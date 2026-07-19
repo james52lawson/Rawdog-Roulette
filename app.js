@@ -131,6 +131,27 @@ function getCycleStatus(data, today) {
   };
 }
 
+// Day-specific chance of conception from a single act of unprotected sex,
+// keyed by offset from the predicted ovulation day. Population averages
+// (Wilcox et al., NEJM 1995), smoothed at the edges because a calendar app's
+// ovulation estimate can be off by a few days — so no day reads as zero.
+const CONCEPTION_TABLE = {
+  '-7': 2, '-6': 4, '-5': 10, '-4': 16, '-3': 14,
+  '-2': 27, '-1': 31, '0': 33, '1': 12, '2': 6, '3': 3
+};
+
+function conceptionLikelihood(day, O) {
+  const off = day - O;
+  const pct = CONCEPTION_TABLE[String(off)] ?? 1;
+  let level, color;
+  if (pct >= 28)      { level = 'Peak';     color = '#f2607a'; }
+  else if (pct >= 20) { level = 'High';     color = '#f08a3c'; }
+  else if (pct >= 10) { level = 'Moderate'; color = '#f5b942'; }
+  else if (pct >= 3)  { level = 'Low';      color = '#4cd4a9'; }
+  else                { level = 'Very low'; color = '#6b6580'; }
+  return { pct, level, color };
+}
+
 /* ================= phase content ================= */
 
 const PHASES = {
@@ -244,6 +265,15 @@ function renderDashboard(data) {
   }
   lines.push(`Next period expected <strong>${formatDate(s.nextPeriodDate)}</strong> (${plural(s.daysToNextPeriod)})`);
   $('countdowns').innerHTML = lines.map(l => `<li>${l}</li>`).join('');
+
+  // pregnancy likelihood
+  const cl = conceptionLikelihood(s.day, s.O);
+  $('pregPct').textContent = '~' + cl.pct + '%';
+  $('pregLevel').textContent = cl.level;
+  $('pregLevel').style.background = cl.color;
+  const fill = $('pregMeter');
+  fill.style.width = Math.min(100, cl.pct / 35 * 100) + '%';
+  fill.style.background = cl.color;
 
   // intel
   $('hormones').textContent = content.hormones;

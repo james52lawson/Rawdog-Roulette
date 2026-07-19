@@ -13,6 +13,7 @@ You log the first day of each period. The app computes:
 - **Cycle day & phase** — menstrual, follicular, ovulation, luteal
 - **Ovulation day** — cycle length − 14
 - **Fertile window** — the 5 days before ovulation plus ovulation day
+- **Pregnancy likelihood** — day-specific chance of conception from unprotected sex (population averages, Wilcox et al. 1995)
 - **Cycle length** — averaged automatically from your logged history (falls back to a manual setting until two starts are logged)
 
 ## Disclaimer
