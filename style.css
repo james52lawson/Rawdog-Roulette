@@ -96,6 +96,15 @@ main { flex: 1; }
   color: var(--phase-color, var(--text));
 }
 
+.sub-phase {
+  margin: -2px 0 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
 .fertile-badge {
   display: inline-block;
   margin: 0 0 8px;

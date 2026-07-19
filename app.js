@@ -97,6 +97,32 @@ function phaseSegments(L, P) {
   return segs;
 }
 
+// Finer-grained sub-phases within each parent phase. Ranges are clamped to
+// the parent segment and dropped when empty (short cycles may lose the
+// follicular sub-phases entirely, matching the parent model).
+function subPhaseSegments(L, P) {
+  const O = L - 14;
+  const subs = [];
+  const push = (key, parent, start, end) => {
+    if (start <= end) subs.push({ key, parent, start, end });
+  };
+  for (const seg of phaseSegments(L, P)) {
+    if (seg.key === 'menstrual') {
+      push('menstrual-heavy', 'menstrual', seg.start, Math.min(2, seg.end));
+      push('menstrual-easing', 'menstrual', Math.max(3, seg.start), seg.end);
+    } else if (seg.key === 'follicular') {
+      push('follicular-building', 'follicular', seg.start, Math.min(seg.end, O - 4));
+      push('follicular-peak', 'follicular', Math.max(seg.start, O - 3), seg.end);
+    } else if (seg.key === 'ovulation') {
+      push('ovulation', 'ovulation', seg.start, seg.end);
+    } else {
+      push('luteal-settled', 'luteal', seg.start, Math.min(seg.end, L - 5));
+      push('luteal-pms', 'luteal', Math.max(seg.start, L - 4), seg.end);
+    }
+  }
+  return subs;
+}
+
 // Everything the dashboard needs for a given day.
 function getCycleStatus(data, today) {
   const starts = [...data.periodStarts].sort();
@@ -119,12 +145,19 @@ function getCycleStatus(data, today) {
   const daysToNextPhase = seg.end - day + 1;
   const nextPhaseName = segIndex === segs.length - 1 ? 'menstrual' : nextSeg.key;
 
+  const subs = subPhaseSegments(L, P);
+  const subIndex = subs.findIndex(x => day >= x.start && day <= x.end);
+  const sub = subs[subIndex];
+  const daysToNextSub = sub.end - day + 1;
+  const nextSubKey = subs[(subIndex + 1) % subs.length].key;
+
   const daysToNextPeriod = L - day + 1;
   const nextPeriodDate = addDays(latest, since + daysToNextPeriod);
   const daysToFertile = day < fertileStart ? fertileStart - day : null;
 
   return {
     day, L, P, O, segs, phase: seg.key,
+    subPhase: sub.key, daysToNextSub, nextSubKey,
     fertileStart, fertileEnd: O, inFertile,
     daysToNextPhase, nextPhaseName,
     daysToNextPeriod, nextPeriodDate, daysToFertile
@@ -154,33 +187,75 @@ function conceptionLikelihood(day, O) {
 
 /* ================= phase content ================= */
 
-const PHASES = {
-  menstrual: {
-    name: 'Menstrual',
-    hormones: 'Estrogen and progesterone are both at their lowest point. Estrogen starts climbing again toward the end.',
-    energy: { level: 'Low', note: 'Stamina and sleep quality dip — rest matters more than usual.' },
-    mood: 'Likely withdrawn with a low social battery. Comfort and quiet time beat big plans.',
+const PHASE_NAMES = {
+  menstrual: 'Menstrual',
+  follicular: 'Follicular',
+  ovulation: 'Ovulation',
+  luteal: 'Luteal'
+};
+
+// `target` is the phrase used when this sub-phase is the countdown destination.
+const SUBPHASES = {
+  'menstrual-heavy': {
+    label: 'Heaviest days',
+    parent: 'menstrual',
+    target: 'the next period',
+    hormones: 'Estrogen and progesterone are on the floor — the hormonal low point of the whole cycle.',
+    energy: { level: 'Low', note: 'The lowest-energy days: cramps and heavy flow demand real rest.' },
+    mood: 'Withdrawn and inward. Social battery is empty — comfort matters far more than conversation.',
     suggestions: [
-      'Prioritize comfort — offer the heating pad, blankets and favorite snacks.',
-      'Take over the household chores without being asked.',
-      'Suggest staying in: a film night beats a night out right now.',
-      'Keep plans flexible and low-pressure.'
+      'Offer the heating pad, blankets and favorite snacks without being asked.',
+      'Take over all the household chores for a couple of days.',
+      'Keep the calendar clear — staying in is the right call.',
+      'Small gestures land big right now; grand plans don’t.'
     ]
   },
-  follicular: {
-    name: 'Follicular',
+  'menstrual-easing': {
+    label: 'Easing off',
+    parent: 'menstrual',
+    target: 'the easing-off days',
+    hormones: 'Estrogen has started climbing again — the worst of the hormonal dip is over.',
+    energy: { level: 'Low', note: 'Still below baseline, but recovering noticeably day by day.' },
+    mood: 'Coming back out of the shell — up for gentle company, not yet for crowds.',
+    suggestions: [
+      'Suggest a gentle outing: a walk, a coffee, nothing ambitious.',
+      'Keep handling the chores — the recovery isn’t done yet.',
+      'A low-key film night beats a night out for another day or two.',
+      'Don’t over-schedule the days ahead just yet.'
+    ]
+  },
+  'follicular-building': {
+    label: 'Energy building',
+    parent: 'follicular',
+    target: 'rising energy',
     hormones: 'Estrogen is rising steadily, and testosterone starts ticking up too.',
-    energy: { level: 'High', note: 'Physical stamina, motivation and sleep are all at their best.' },
-    mood: 'Outgoing, optimistic and highly communicative. Social battery is full.',
+    energy: { level: 'High', note: 'Motivation, stamina and sleep quality all climbing fast.' },
+    mood: 'Optimistic, curious and increasingly social — a great planning-and-doing stretch.',
     suggestions: [
       'Plan active dates — hikes, classes, anything new and energetic.',
-      'Say yes to social plans; people are more fun this week.',
-      'Great week to tackle bigger projects and decisions together.',
-      'Bring ideas — novelty and future plans land especially well now.'
+      'Start the bigger joint projects and decisions now.',
+      'Book things for the week ahead while enthusiasm is high.',
+      'Bring ideas — novelty and future plans land especially well.'
     ]
   },
-  ovulation: {
-    name: 'Ovulation',
+  'follicular-peak': {
+    label: 'Peak energy',
+    parent: 'follicular',
+    target: 'the peak-energy days',
+    hormones: 'Estrogen is near its top and luteinizing hormone is about to surge.',
+    energy: { level: 'High', note: 'The most energetic, social days of the whole cycle.' },
+    mood: 'Outgoing, confident and highly communicative — social battery at maximum.',
+    suggestions: [
+      'This is the window for big social plans and adventurous dates.',
+      'Have the important conversation or make the big decision now.',
+      'Say yes to everything social — she’ll shine.',
+      'Heads-up: the fertile window is opening, whichever way you’re planning.'
+    ]
+  },
+  'ovulation': {
+    label: 'Fertility peak',
+    parent: 'ovulation',
+    target: 'ovulation',
     hormones: 'Estrogen and luteinizing hormone are peaking — this is when fertility is highest.',
     energy: { level: 'High', note: 'Confidence and drive peak, along with libido.' },
     mood: 'Magnetic and social — likely feeling her most confident and connected.',
@@ -191,11 +266,27 @@ const PHASES = {
       'Compliments land double this week — be specific and sincere.'
     ]
   },
-  luteal: {
-    name: 'Luteal',
-    hormones: 'Progesterone peaks, then both hormones fall sharply in the final days before the next period.',
-    energy: { level: 'Baseline', note: 'Sliding toward low — fatigue and cravings build near the end.' },
-    mood: 'Patience may run short and the social battery drains faster. Irritability is hormonal — not personal.',
+  'luteal-settled': {
+    label: 'Settled',
+    parent: 'luteal',
+    target: 'the settled stretch',
+    hormones: 'Progesterone is rising — the calming, cozy hormone of the back half of the cycle.',
+    energy: { level: 'Baseline', note: 'Steady and grounded; appetite starts creeping up.' },
+    mood: 'Calm, content and home-oriented — often the most settled stretch of the month.',
+    suggestions: [
+      'Lean into quality time at home — cook together, slow evenings.',
+      'Great stretch for routines, home projects and practical plans.',
+      'Comfort food is welcome; keep good snacks around.',
+      'Enjoy the calm — low-drama togetherness is the move this week.'
+    ]
+  },
+  'luteal-pms': {
+    label: 'PMS window',
+    parent: 'luteal',
+    target: 'the PMS window',
+    hormones: 'Progesterone and estrogen are both falling fast — the crash behind PMS.',
+    energy: { level: 'Low', note: 'Fatigue and cravings peak; sleep may run lighter.' },
+    mood: 'Patience runs short and the social battery drains fastest. Irritability is chemistry, not commentary.',
     suggestions: [
       'Don’t take irritability personally — it’s chemistry, not you.',
       'Cook dinner and handle the grocery run without making it a thing.',
@@ -312,13 +403,14 @@ function render() {
 
 function renderDashboard(data) {
   const s = getCycleStatus(data, todayISO());
-  const content = PHASES[s.phase];
+  const content = SUBPHASES[s.subPhase];
 
   document.body.className = 'phase-' + s.phase;
 
   $('dayNum').textContent = s.day;
   $('cycleLen').textContent = s.L;
-  $('phaseName').textContent = content.name;
+  $('phaseName').textContent = PHASE_NAMES[s.phase];
+  $('subPhaseName').textContent = content.label;
   $('fertileBadge').hidden = !s.inFertile;
 
   // timeline
@@ -339,7 +431,7 @@ function renderDashboard(data) {
   // countdowns
   const lines = [];
   const plural = n => n === 1 ? '1 day' : `${n} days`;
-  lines.push(`<strong>${plural(s.daysToNextPhase)}</strong> until the ${PHASES[s.nextPhaseName].name.toLowerCase()} phase`);
+  lines.push(`<strong>${plural(s.daysToNextSub)}</strong> until ${SUBPHASES[s.nextSubKey].target}`);
   if (s.daysToFertile !== null) {
     lines.push(`<strong>${plural(s.daysToFertile)}</strong> until the fertile window`);
   } else if (s.inFertile) {
