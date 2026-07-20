@@ -365,11 +365,11 @@ function renderCalendar(data) {
   $('calTitle').textContent = first.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
 
   const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-  const lead = (first.getDay() + 6) % 7; // Monday-first grid
+  const lead = first.getDay(); // Sunday-first grid
   const grid = $('calGrid');
   grid.innerHTML = '';
 
-  for (const wd of ['M', 'T', 'W', 'T', 'F', 'S', 'S']) {
+  for (const wd of ['S', 'M', 'T', 'W', 'T', 'F', 'S']) {
     const el = document.createElement('div');
     el.className = 'cal-wd';
     el.textContent = wd;
