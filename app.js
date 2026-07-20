@@ -204,6 +204,7 @@ const SUBPHASES = {
     energy: { level: 'Low', note: 'The lowest-energy days: cramps and heavy flow demand real rest.' },
     breasts: { size: 'Deflating', note: 'The PMS swelling is draining away fast. Any lingering soreness fades over these first days.' },
     sleep: { need: '9h+ & naps', note: 'The highest sleep need of the cycle — blood loss and cramps are draining. Early nights, and daytime naps are legitimate recovery, not laziness.' },
+    libido: { level: 'Lowest', note: 'Rock bottom for most — cramps and the hormonal floor leave little interest. A minority get a brief spike as cramps ease; follow her lead and never assume either way.' },
     mood: 'Withdrawn and inward. Social battery is empty — comfort matters far more than conversation.',
     suggestions: [
       'Offer the heating pad, blankets and favorite snacks without being asked.',
@@ -220,6 +221,7 @@ const SUBPHASES = {
     energy: { level: 'Low', note: 'Still below baseline, but recovering noticeably day by day.' },
     breasts: { size: 'Smallest', note: 'At or near their smallest of the cycle — soft, light and fully comfortable again.' },
     sleep: { need: '8–9h', note: 'Still rebuilding — keep the early bedtimes another day or two. A weekend lie-in or an afternoon nap speeds the recovery.' },
+    libido: { level: 'Low', note: 'Waking up with the rising estrogen, but interest is still well below baseline. Affection without an agenda is the safer read.' },
     mood: 'Coming back out of the shell — up for gentle company, not yet for crowds.',
     suggestions: [
       'Suggest a gentle outing: a walk, a coffee, nothing ambitious.',
@@ -236,6 +238,7 @@ const SUBPHASES = {
     energy: { level: 'High', note: 'Motivation, stamina and sleep quality all climbing fast.' },
     breasts: { size: 'Smallest', note: 'The smallest, lightest stretch of the month — soft, not tender at all. Least noticeable they’ll be.' },
     sleep: { need: '7–8h', note: 'Sleep is deep and efficient right now — a normal night leaves her fully charged. No naps needed this stretch.' },
+    libido: { level: 'Building', note: 'Climbing steadily with estrogen and testosterone. Flirtation and anticipation land better than a direct approach right now.' },
     mood: 'Optimistic, curious and increasingly social — a great planning-and-doing stretch.',
     suggestions: [
       'Plan active dates — hikes, classes, anything new and energetic.',
@@ -252,6 +255,7 @@ const SUBPHASES = {
     energy: { level: 'High', note: 'The most energetic, social days of the whole cycle.' },
     breasts: { size: 'Baseline', note: 'Still small and comfortable, with a hint of fullness arriving as estrogen nears its peak.' },
     sleep: { need: '7–8h', note: 'The lowest sleep need of the cycle — she runs great on a standard night and late evenings out cost little.' },
+    libido: { level: 'High', note: 'Close to peak and rising fast, with confidence to match. Initiation is likely to be mutual this stretch.' },
     mood: 'Outgoing, confident and highly communicative — social battery at maximum.',
     suggestions: [
       'This is the window for big social plans and adventurous dates.',
@@ -268,6 +272,7 @@ const SUBPHASES = {
     energy: { level: 'High', note: 'Confidence and drive peak, along with libido.' },
     breasts: { size: 'Plumping', note: 'A subtle swell begins around ovulation; nipples can turn briefly sensitive at the estrogen peak.' },
     sleep: { need: '7–8h', note: 'Standard needs, though body temperature starts rising after ovulation — the bedroom running cool helps her sleep through.' },
+    libido: { level: 'Peak', note: 'The high point of the cycle — biology is actively pushing in this direction. Note that peak desire and peak fertility land on exactly the same days.' },
     mood: 'Magnetic and social — likely feeling her most confident and connected.',
     suggestions: [
       'Fertility is peaking — the key days if you’re trying to conceive (and the days to be extra careful if you’re not).',
@@ -284,6 +289,7 @@ const SUBPHASES = {
     energy: { level: 'Baseline', note: 'Steady and grounded; appetite starts creeping up.' },
     breasts: { size: 'Filling out', note: 'Progesterone is plumping them up day by day — noticeably fuller and heavier, mild tenderness starting.' },
     sleep: { need: '8h+', note: 'Progesterone is a natural sedative — she’ll get drowsy earlier than usual. Lean into early nights rather than fighting them.' },
+    libido: { level: 'Moderate', note: 'Down off the peak as progesterone rises, but comfortably present. Warmth and familiarity matter more than novelty now.' },
     mood: 'Calm, content and home-oriented — often the most settled stretch of the month.',
     suggestions: [
       'Lean into quality time at home — cook together, slow evenings.',
@@ -300,6 +306,7 @@ const SUBPHASES = {
     energy: { level: 'Low', note: 'Fatigue and cravings peak; sleep may run lighter.' },
     breasts: { size: 'Fullest', note: 'Peak size — swollen, heavy and often genuinely sore. Look, don’t squeeze; a hug can be enough pressure.' },
     sleep: { need: '8–9h & naps', note: 'She needs more sleep but gets worse sleep — elevated temperature keeps it light and broken. Budget longer nights and don’t begrudge a nap.' },
+    libido: { level: 'Variable', note: 'The least predictable stretch: sore breasts, bloating and fatigue kill interest for many, while others get a distinct pre-period surge. Ask, don’t guess.' },
     mood: 'Patience runs short and the social battery drains fastest. Irritability is chemistry, not commentary.',
     suggestions: [
       'Don’t take irritability personally — it’s chemistry, not you.',
@@ -473,6 +480,8 @@ function renderDashboard(data) {
   $('boobNote').textContent = content.breasts.note;
   $('sleepNeed').textContent = content.sleep.need;
   $('sleepNote').textContent = content.sleep.note;
+  $('libidoLevel').textContent = content.libido.level;
+  $('libidoNote').textContent = content.libido.note;
 
   // suggestions
   $('suggestions').innerHTML = content.suggestions
@@ -513,6 +522,7 @@ function renderPhases(data) {
         `<div><dt>Mood</dt><dd>${c.mood}</dd></div>` +
         `<div><dt>Boobs</dt><dd><strong>${c.breasts.size}.</strong> ${c.breasts.note}</dd></div>` +
         `<div><dt>Sleep</dt><dd><strong>${c.sleep.need}.</strong> ${c.sleep.note}</dd></div>` +
+        `<div><dt>Horniness</dt><dd><strong>${c.libido.level}.</strong> ${c.libido.note}</dd></div>` +
         `</dl>` +
         `<ul class="sp-tips">${c.suggestions.map(t => `<li>${t}</li>`).join('')}</ul>` +
         `</div>`;
