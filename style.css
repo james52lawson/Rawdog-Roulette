@@ -19,7 +19,7 @@
   --title2: #1084d0;
   --menstrual: #c00000;
   --follicular: #008000;
-  --ovulation: #b06000;
+  --ovulation: #0050d0;
   --luteal: #800080;
   /* classic Win95 double bevels */
   --bevel-out: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
@@ -347,19 +347,21 @@ button.tb-btn:active { box-shadow: var(--bevel-thin-in); }
   font-weight: bold;
 }
 
-.cal-day.o-est::after,
-.cal-day.o-pred::after {
-  content: "";
-  position: absolute;
-  bottom: 2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
+/* Ovulation fills the whole cell like a period day. These come after the
+   period rules so that on short cycles, where a long period can overlap the
+   estimated ovulation day, the rarer ovulation marker is the one that shows. */
+.cal-day.o-est {
+  background: var(--ovulation);
+  color: #fff;
+  font-weight: bold;
 }
 
-.cal-day.o-est::after { background: var(--ovulation); }
-.cal-day.o-pred::after { border: 1px solid var(--ovulation); width: 5px; height: 5px; }
+.cal-day.o-pred {
+  background-color: var(--face); /* override a period fill on overlapping days */
+  background-image: conic-gradient(rgba(0, 80, 208, 0.5) 25%, transparent 0 50%, rgba(0, 80, 208, 0.5) 0 75%, transparent 0);
+  background-size: 4px 4px;
+  font-weight: bold;
+}
 
 .cal-day.is-today {
   box-shadow: var(--bevel-thin-in);
@@ -391,7 +393,10 @@ button.tb-btn:active { box-shadow: var(--bevel-thin-in); }
   background-size: 4px 4px;
 }
 .lg-ov { background: var(--ovulation); border-color: #000; }
-.lg-ov-pred { border-color: var(--ovulation); }
+.lg-ov-pred {
+  background-image: conic-gradient(rgba(0, 80, 208, 0.5) 25%, transparent 0 50%, rgba(0, 80, 208, 0.5) 0 75%, transparent 0);
+  background-size: 4px 4px;
+}
 
 /* ---------- forms & buttons ---------- */
 
