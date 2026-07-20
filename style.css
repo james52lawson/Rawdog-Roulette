@@ -68,6 +68,11 @@ body {
   letter-spacing: 1px;
 }
 
+.header-btns { display: flex; gap: 6px; flex-shrink: 0; }
+
+.header-btns .btn { padding: 7px 10px; }
+.header-btns .btn:active { padding: 8px 9px 6px 11px; }
+
 main { flex: 1; }
 
 /* ---------- windows ---------- */
@@ -439,6 +444,98 @@ input:disabled { background: var(--face); color: #333; }
   display: block;
   width: 100%;
   margin-top: 12px;
+}
+
+/* ---------- phases reference ---------- */
+
+.phase-group { margin-top: 16px; }
+
+.phase-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 0 8px;
+  padding: 4px 10px;
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 1px;
+  box-shadow: var(--bevel-thin);
+}
+
+.phase-days { font-size: 11px; font-weight: normal; letter-spacing: 0; }
+
+.subphase {
+  margin-bottom: 10px;
+  padding: 8px 9px;
+  background: #fff;
+  box-shadow: var(--bevel-well);
+}
+
+.subphase.now { background: #ffffcc; }
+
+.sp-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.sp-days {
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #333;
+}
+
+.sp-now {
+  padding: 1px 6px;
+  background: var(--title1);
+  color: #fff;
+  font-size: 10px;
+}
+
+.sp-details { margin: 0; font-size: 12px; }
+
+.sp-details div { margin-bottom: 4px; }
+
+.sp-details dt {
+  display: inline;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--title1);
+}
+
+.sp-details dt::after { content: ': '; }
+
+.sp-details dd { display: inline; margin: 0; }
+
+.sp-tips {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 6px 0 0;
+  border-top: 1px dotted #808080;
+}
+
+.sp-tips li {
+  position: relative;
+  padding: 2px 0 2px 14px;
+  font-size: 12px;
+}
+
+.sp-tips li::before {
+  content: '\25A0';
+  position: absolute;
+  left: 1px;
+  top: 3px;
+  font-size: 8px;
+  color: #808080;
 }
 
 /* ---------- settings ---------- */

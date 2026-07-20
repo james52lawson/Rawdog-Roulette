@@ -13,7 +13,10 @@
 <body>
 <header class="app-header">
   <h1>&#128190; Cycle Companion</h1>
-  <button id="settingsBtn" class="btn" hidden>Settings</button>
+  <div class="header-btns">
+    <button id="phasesBtn" class="btn" hidden>Phases</button>
+    <button id="settingsBtn" class="btn" hidden>Settings</button>
+  </div>
 </header>
 
 <main id="app">
@@ -88,6 +91,14 @@
             <dt>Mood &amp; social battery</dt>
             <dd id="mood"></dd>
           </div>
+          <div class="intel-row">
+            <dt>Boobs</dt>
+            <dd><span class="level-badge" id="boobSize"></span> <span id="boobNote"></span></dd>
+          </div>
+          <div class="intel-row">
+            <dt>Sleep</dt>
+            <dd><span class="level-badge" id="sleepNeed"></span> <span id="sleepNote"></span></dd>
+          </div>
         </dl>
       </div>
     </section>
@@ -125,6 +136,18 @@
 
     <button id="periodBtn" class="btn primary block">Period started today</button>
   </div>
+
+  <!-- Phases reference -->
+  <section id="phasesView" class="window" hidden>
+    <div class="titlebar">
+      <span class="tb-caption">phases.hlp</span>
+      <span class="tb-controls"><span class="tb-btn">_</span><span class="tb-btn">&#9633;</span><button class="tb-btn" id="phasesClose" aria-label="Close phases">&#215;</button></span>
+    </div>
+    <div class="window-body">
+      <div id="phasesBody"></div>
+      <button id="phasesBack" class="btn block">Back to dashboard</button>
+    </div>
+  </section>
 
   <!-- Settings -->
   <section id="settingsView" class="window" hidden>

@@ -202,6 +202,8 @@ const SUBPHASES = {
     target: 'the next period',
     hormones: 'Estrogen and progesterone are on the floor — the hormonal low point of the whole cycle.',
     energy: { level: 'Low', note: 'The lowest-energy days: cramps and heavy flow demand real rest.' },
+    breasts: { size: 'Deflating', note: 'The PMS swelling is draining away fast. Any lingering soreness fades over these first days.' },
+    sleep: { need: '9h+ & naps', note: 'The highest sleep need of the cycle — blood loss and cramps are draining. Early nights, and daytime naps are legitimate recovery, not laziness.' },
     mood: 'Withdrawn and inward. Social battery is empty — comfort matters far more than conversation.',
     suggestions: [
       'Offer the heating pad, blankets and favorite snacks without being asked.',
@@ -216,6 +218,8 @@ const SUBPHASES = {
     target: 'the easing-off days',
     hormones: 'Estrogen has started climbing again — the worst of the hormonal dip is over.',
     energy: { level: 'Low', note: 'Still below baseline, but recovering noticeably day by day.' },
+    breasts: { size: 'Smallest', note: 'At or near their smallest of the cycle — soft, light and fully comfortable again.' },
+    sleep: { need: '8–9h', note: 'Still rebuilding — keep the early bedtimes another day or two. A weekend lie-in or an afternoon nap speeds the recovery.' },
     mood: 'Coming back out of the shell — up for gentle company, not yet for crowds.',
     suggestions: [
       'Suggest a gentle outing: a walk, a coffee, nothing ambitious.',
@@ -230,6 +234,8 @@ const SUBPHASES = {
     target: 'rising energy',
     hormones: 'Estrogen is rising steadily, and testosterone starts ticking up too.',
     energy: { level: 'High', note: 'Motivation, stamina and sleep quality all climbing fast.' },
+    breasts: { size: 'Smallest', note: 'The smallest, lightest stretch of the month — soft, not tender at all. Least noticeable they’ll be.' },
+    sleep: { need: '7–8h', note: 'Sleep is deep and efficient right now — a normal night leaves her fully charged. No naps needed this stretch.' },
     mood: 'Optimistic, curious and increasingly social — a great planning-and-doing stretch.',
     suggestions: [
       'Plan active dates — hikes, classes, anything new and energetic.',
@@ -244,6 +250,8 @@ const SUBPHASES = {
     target: 'the peak-energy days',
     hormones: 'Estrogen is near its top and luteinizing hormone is about to surge.',
     energy: { level: 'High', note: 'The most energetic, social days of the whole cycle.' },
+    breasts: { size: 'Baseline', note: 'Still small and comfortable, with a hint of fullness arriving as estrogen nears its peak.' },
+    sleep: { need: '7–8h', note: 'The lowest sleep need of the cycle — she runs great on a standard night and late evenings out cost little.' },
     mood: 'Outgoing, confident and highly communicative — social battery at maximum.',
     suggestions: [
       'This is the window for big social plans and adventurous dates.',
@@ -258,6 +266,8 @@ const SUBPHASES = {
     target: 'ovulation',
     hormones: 'Estrogen and luteinizing hormone are peaking — this is when fertility is highest.',
     energy: { level: 'High', note: 'Confidence and drive peak, along with libido.' },
+    breasts: { size: 'Plumping', note: 'A subtle swell begins around ovulation; nipples can turn briefly sensitive at the estrogen peak.' },
+    sleep: { need: '7–8h', note: 'Standard needs, though body temperature starts rising after ovulation — the bedroom running cool helps her sleep through.' },
     mood: 'Magnetic and social — likely feeling her most confident and connected.',
     suggestions: [
       'Fertility is peaking — the key days if you’re trying to conceive (and the days to be extra careful if you’re not).',
@@ -272,6 +282,8 @@ const SUBPHASES = {
     target: 'the settled stretch',
     hormones: 'Progesterone is rising — the calming, cozy hormone of the back half of the cycle.',
     energy: { level: 'Baseline', note: 'Steady and grounded; appetite starts creeping up.' },
+    breasts: { size: 'Filling out', note: 'Progesterone is plumping them up day by day — noticeably fuller and heavier, mild tenderness starting.' },
+    sleep: { need: '8h+', note: 'Progesterone is a natural sedative — she’ll get drowsy earlier than usual. Lean into early nights rather than fighting them.' },
     mood: 'Calm, content and home-oriented — often the most settled stretch of the month.',
     suggestions: [
       'Lean into quality time at home — cook together, slow evenings.',
@@ -286,6 +298,8 @@ const SUBPHASES = {
     target: 'the PMS window',
     hormones: 'Progesterone and estrogen are both falling fast — the crash behind PMS.',
     energy: { level: 'Low', note: 'Fatigue and cravings peak; sleep may run lighter.' },
+    breasts: { size: 'Fullest', note: 'Peak size — swollen, heavy and often genuinely sore. Look, don’t squeeze; a hug can be enough pressure.' },
+    sleep: { need: '8–9h & naps', note: 'She needs more sleep but gets worse sleep — elevated temperature keeps it light and broken. Budget longer nights and don’t begrudge a nap.' },
     mood: 'Patience runs short and the social battery drains fastest. Irritability is chemistry, not commentary.',
     suggestions: [
       'Don’t take irritability personally — it’s chemistry, not you.',
@@ -383,10 +397,11 @@ function calGoTo(year, month) {
 const $ = id => document.getElementById(id);
 
 function show(viewId) {
-  ['setupView', 'dashboard', 'settingsView'].forEach(id => {
+  ['setupView', 'dashboard', 'settingsView', 'phasesView'].forEach(id => {
     $(id).hidden = id !== viewId;
   });
   $('settingsBtn').hidden = viewId !== 'dashboard';
+  $('phasesBtn').hidden = viewId !== 'dashboard';
 }
 
 function render() {
@@ -454,6 +469,10 @@ function renderDashboard(data) {
   $('energyLevel').textContent = content.energy.level;
   $('energyNote').textContent = content.energy.note;
   $('mood').textContent = content.mood;
+  $('boobSize').textContent = content.breasts.size;
+  $('boobNote').textContent = content.breasts.note;
+  $('sleepNeed').textContent = content.sleep.need;
+  $('sleepNote').textContent = content.sleep.note;
 
   // suggestions
   $('suggestions').innerHTML = content.suggestions
@@ -464,6 +483,43 @@ function renderDashboard(data) {
   calYear = now.getFullYear();
   calMonth = now.getMonth();
   renderCalendar(data);
+}
+
+// Static reference page: every phase and sub-phase with its day range and
+// details, built from the same SUBPHASES content the dashboard uses. Day
+// ranges reflect the user's current cycle/period lengths.
+function renderPhases(data) {
+  const s = getCycleStatus(data, todayISO());
+  const subs = subPhaseSegments(s.L, s.P);
+  const range = (a, b) => a === b ? `Day ${a}` : `Days ${a}–${b}`;
+
+  let html = `<p class="muted">Your full ${s.L}-day cycle at a glance. ` +
+    `Fertile window: days ${s.fertileStart}–${s.fertileEnd} ` +
+    `(ovulation expected day ${s.O}). Day ranges adjust as your logged history updates the averages.</p>`;
+
+  for (const seg of s.segs) {
+    html += `<div class="phase-group">` +
+      `<h3 class="phase-head" style="background: var(--${seg.key})">` +
+      `${PHASE_NAMES[seg.key]}<span class="phase-days">${range(seg.start, seg.end)}</span></h3>`;
+    for (const sub of subs.filter(x => x.parent === seg.key)) {
+      const c = SUBPHASES[sub.key];
+      const now = sub.key === s.subPhase;
+      html += `<div class="subphase${now ? ' now' : ''}">` +
+        `<p class="sp-title">${c.label}<span class="sp-days">${range(sub.start, sub.end)}</span>` +
+        (now ? '<span class="sp-now">You are here</span>' : '') + `</p>` +
+        `<dl class="sp-details">` +
+        `<div><dt>Hormones</dt><dd>${c.hormones}</dd></div>` +
+        `<div><dt>Energy</dt><dd><strong>${c.energy.level}.</strong> ${c.energy.note}</dd></div>` +
+        `<div><dt>Mood</dt><dd>${c.mood}</dd></div>` +
+        `<div><dt>Boobs</dt><dd><strong>${c.breasts.size}.</strong> ${c.breasts.note}</dd></div>` +
+        `<div><dt>Sleep</dt><dd><strong>${c.sleep.need}.</strong> ${c.sleep.note}</dd></div>` +
+        `</dl>` +
+        `<ul class="sp-tips">${c.suggestions.map(t => `<li>${t}</li>`).join('')}</ul>` +
+        `</div>`;
+    }
+    html += `</div>`;
+  }
+  $('phasesBody').innerHTML = html;
 }
 
 function renderSettings(data) {
@@ -541,6 +597,14 @@ function initEvents() {
 
   $('backBtn').addEventListener('click', () => render());
   $('settingsClose').addEventListener('click', () => render());
+
+  $('phasesBtn').addEventListener('click', () => {
+    renderPhases(loadData());
+    show('phasesView');
+    window.scrollTo(0, 0);
+  });
+  $('phasesBack').addEventListener('click', () => render());
+  $('phasesClose').addEventListener('click', () => render());
 
   $('logBtn').addEventListener('click', () => {
     const iso = $('logDate').value;
