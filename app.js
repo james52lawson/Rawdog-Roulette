@@ -206,6 +206,11 @@ const SUBPHASES = {
     sleep: { need: '9h+ & naps', note: 'The highest sleep need of the cycle — blood loss and cramps are draining. Early nights, and daytime naps are legitimate recovery, not laziness.' },
     libido: { level: 'Lowest', note: 'Rock bottom for most — cramps and the hormonal floor leave little interest. A minority get a brief spike as cramps ease; follow her lead and never assume either way.' },
     mood: 'Withdrawn and inward. Social battery is empty — comfort matters far more than conversation.',
+    bloating: { level: 'Cramps peak', note: 'Prostaglandins drive the strongest uterine cramps, sometimes with back ache or headaches. The earlier bloating is deflating.' },
+    cervical: { type: 'Menstruation', note: 'The flow masks everything — nothing to read here yet.' },
+    appetite: { level: 'Normalizing', note: 'The PMS cravings have broken and appetite settles back down. Iron-rich food helps replace what’s lost to bleeding.' },
+    hydration: { need: 'High', note: 'Bleeding drains fluids and iron — steady water and warm drinks ease cramps and headaches.' },
+    exercise: { focus: 'Rest / gentle', note: 'Hormones are at their floor; gentle movement — walks, restorative yoga, stretching — eases cramps, but don’t force it on the worst days.' },
     suggestions: [
       'Offer the heating pad, blankets and favorite snacks without being asked.',
       'Take over all the household chores for a couple of days.',
@@ -223,6 +228,11 @@ const SUBPHASES = {
     sleep: { need: '8–9h', note: 'Still rebuilding — keep the early bedtimes another day or two. A weekend lie-in or an afternoon nap speeds the recovery.' },
     libido: { level: 'Low', note: 'Waking up with the rising estrogen, but interest is still well below baseline. Affection without an agenda is the safer read.' },
     mood: 'Coming back out of the shell — up for gentle company, not yet for crowds.',
+    bloating: { level: 'Fading', note: 'Cramps ease off and the bloat is gone — the body feels noticeably lighter and more comfortable.' },
+    cervical: { type: 'Light → dry', note: 'Spotting tapers off into the dry days; low, thick and minimal.' },
+    appetite: { level: 'Low', note: 'Settled and easy — cravings gone, drawn to lighter, fresher food.' },
+    hydration: { need: 'Moderate', note: 'Losses are tapering; needs drift back toward baseline as the flow lightens.' },
+    exercise: { focus: 'Ease back in', note: 'Energy is rebuilding fast — a good point to restart the routine gently with walking, light strength and mobility.' },
     suggestions: [
       'Suggest a gentle outing: a walk, a coffee, nothing ambitious.',
       'Keep handling the chores — the recovery isn’t done yet.',
@@ -240,6 +250,11 @@ const SUBPHASES = {
     sleep: { need: '7–8h', note: 'Sleep is deep and efficient right now — a normal night leaves her fully charged. No naps needed this stretch.' },
     libido: { level: 'Building', note: 'Climbing steadily with estrogen and testosterone. Flirtation and anticipation land better than a direct approach right now.' },
     mood: 'Optimistic, curious and increasingly social — a great planning-and-doing stretch.',
+    bloating: { level: 'Clear', note: 'The most comfortable stretch — minimal symptoms, body at its best.' },
+    cervical: { type: 'Sticky → creamy', note: 'Rising estrogen shifts it from tacky to a creamy, lotion-like texture. The fertility signal is starting to climb.' },
+    appetite: { level: 'Low', note: 'Rising estrogen keeps appetite in check; naturally reaching for lighter meals.' },
+    hydration: { need: 'Baseline', note: 'Normal needs, rising with the extra activity as energy climbs.' },
+    exercise: { focus: 'Build & lift', note: 'Rising estrogen aids muscle building and recovery — start the heavy block and ramp the loads.' },
     suggestions: [
       'Plan active dates — hikes, classes, anything new and energetic.',
       'Start the bigger joint projects and decisions now.',
@@ -257,6 +272,11 @@ const SUBPHASES = {
     sleep: { need: '7–8h', note: 'The lowest sleep need of the cycle — she runs great on a standard night and late evenings out cost little.' },
     libido: { level: 'High', note: 'Close to peak and rising fast, with confidence to match. Initiation is likely to be mutual this stretch.' },
     mood: 'Outgoing, confident and highly communicative — social battery at maximum.',
+    bloating: { level: 'Clear', note: 'Still comfortable, maybe the first faint hint of a mid-cycle twinge on the way.' },
+    cervical: { type: 'Creamy → wet', note: 'Turning watery and slippery; the first stretchy, clear traces appear as the fertile window opens.' },
+    appetite: { level: 'Lowest', note: 'The estrogen peak suppresses appetite most — least hungry, least driven by cravings.' },
+    hydration: { need: 'Baseline+', note: 'Busy, active days — top up around workouts and nights out.' },
+    exercise: { focus: 'Strength & power', note: 'The window for intense training: chase PRs and HIIT while estrogen supports strength, recovery and pain tolerance.' },
     suggestions: [
       'This is the window for big social plans and adventurous dates.',
       'Have the important conversation or make the big decision now.',
@@ -274,6 +294,11 @@ const SUBPHASES = {
     sleep: { need: '7–8h', note: 'Standard needs, though body temperature starts rising after ovulation — the bedroom running cool helps her sleep through.' },
     libido: { level: 'Peak', note: 'The high point of the cycle — biology is actively pushing in this direction. Note that peak desire and peak fertility land on exactly the same days.' },
     mood: 'Magnetic and social — likely feeling her most confident and connected.',
+    bloating: { level: 'Ovulation twinge', note: 'Some feel mittelschmerz — a brief one-sided pinch as the egg releases, occasionally with light spotting. Usually mild.' },
+    cervical: { type: 'Egg-white', note: 'Clear, stretchy and slippery like raw egg white — the peak-fertility signal, and the most abundant of the cycle.' },
+    appetite: { level: 'Low', note: 'Still near the cycle’s low point around the estrogen peak.' },
+    hydration: { need: 'Baseline+', note: 'Basal temperature ticks up just after ovulation, nudging needs slightly higher.' },
+    exercise: { focus: 'Power / PRs', note: 'Strength peaks, but joints are laxer around ovulation (higher ACL and sprain risk) — warm up well and be careful with max lifts and plyos.' },
     suggestions: [
       'Fertility is peaking — the key days if you’re trying to conceive (and the days to be extra careful if you’re not).',
       'Plan a romantic night out; effort and attention go a long way right now.',
@@ -291,6 +316,11 @@ const SUBPHASES = {
     sleep: { need: '8h+', note: 'Progesterone is a natural sedative — she’ll get drowsy earlier than usual. Lean into early nights rather than fighting them.' },
     libido: { level: 'Moderate', note: 'Down off the peak as progesterone rises, but comfortably present. Warmth and familiarity matter more than novelty now.' },
     mood: 'Calm, content and home-oriented — often the most settled stretch of the month.',
+    bloating: { level: 'Mild bloat', note: 'Water retention and puffiness begin as progesterone rises; the gut slows too, so some constipation.' },
+    cervical: { type: 'Sticky / dry', note: 'Progesterone thickens and dries it up fast after ovulation — pasty, cloudy and much less of it.' },
+    appetite: { level: 'Climbing', note: 'Progesterone lifts appetite and slightly raises metabolism — portions and hunger start creeping up.' },
+    hydration: { need: 'Moderate', note: 'Temperature is up on progesterone — start front-loading water now to pre-empt the PMS bloat.' },
+    exercise: { focus: 'Endurance', note: 'Progesterone raises core temperature and perceived effort — pivot from maxing to steady-state cardio, volume and technique.' },
     suggestions: [
       'Lean into quality time at home — cook together, slow evenings.',
       'Great stretch for routines, home projects and practical plans.',
@@ -308,6 +338,11 @@ const SUBPHASES = {
     sleep: { need: '8–9h & naps', note: 'She needs more sleep but gets worse sleep — elevated temperature keeps it light and broken. Budget longer nights and don’t begrudge a nap.' },
     libido: { level: 'Variable', note: 'The least predictable stretch: sore breasts, bloating and fatigue kill interest for many, while others get a distinct pre-period surge. Ask, don’t guess.' },
     mood: 'Patience runs short and the social battery drains fastest. Irritability is chemistry, not commentary.',
+    bloating: { level: 'Peak bloat', note: 'Water retention peaks — puffy and heavy, often with pre-period cramps or back ache. Hydration and less salt genuinely help.' },
+    cervical: { type: 'Dry / thick', note: 'Mostly dry or thick and sticky; some notice a brief wet feeling as progesterone falls, but it’s not fertile.' },
+    appetite: { level: 'Peak', note: 'Strongest cravings of the month — carbs, sugar, salt, chocolate — as a serotonin dip drives comfort-eating. She’s genuinely hungrier, not indulgent.' },
+    hydration: { need: 'Highest', note: 'Counter-intuitive: more water, plus less salt, caffeine and alcohol, reduces the bloating rather than worsening it.' },
+    exercise: { focus: 'Recovery / deload', note: 'Energy and recovery are down — treat it as a deload: yoga, pilates, easy cardio, more rest, protein and hydration.' },
     suggestions: [
       'Don’t take irritability personally — it’s chemistry, not you.',
       'Cook dinner and handle the grocery run without making it a thing.',
@@ -316,6 +351,49 @@ const SUBPHASES = {
     ]
   }
 };
+
+// Every intel field, defined once: its label and how to pull a badge + note
+// out of a SUBPHASES entry. Both the dashboard windows and the flat phases
+// reference render from this list, so a new field is added in one place.
+const INTEL_FIELDS = {
+  hormones:  { label: 'Hormones',              get: c => ({ note: c.hormones }) },
+  mood:      { label: 'Mood & social battery', get: c => ({ note: c.mood }) },
+  energy:    { label: 'Energy',                get: c => ({ badge: c.energy.level, note: c.energy.note }) },
+  breasts:   { label: 'Boobs',                 get: c => ({ badge: c.breasts.size, note: c.breasts.note }) },
+  sleep:     { label: 'Sleep',                 get: c => ({ badge: c.sleep.need, note: c.sleep.note }) },
+  bloating:  { label: 'Bloating & cramps',     get: c => ({ badge: c.bloating.level, note: c.bloating.note }) },
+  cervical:  { label: 'Cervical fluid',        get: c => ({ badge: c.cervical.type, note: c.cervical.note }) },
+  libido:    { label: 'Horniness',             get: c => ({ badge: c.libido.level, note: c.libido.note }) },
+  appetite:  { label: 'Appetite & cravings',   get: c => ({ badge: c.appetite.level, note: c.appetite.note }) },
+  hydration: { label: 'Hydration',             get: c => ({ badge: c.hydration.need, note: c.hydration.note }) },
+  exercise:  { label: 'Exercise',              get: c => ({ badge: c.exercise.focus, note: c.exercise.note }) }
+};
+
+// The dashboard splits the intel fields across three stacked Notepad windows.
+const INTEL_WINDOWS = [
+  { caption: 'vibe.txt - Notepad',    fields: ['hormones', 'mood', 'energy', 'libido'] },
+  { caption: 'body.txt - Notepad',    fields: ['breasts', 'sleep', 'bloating', 'cervical'] },
+  { caption: 'fitness.txt - Notepad', fields: ['appetite', 'hydration', 'exercise'] }
+];
+
+const TB_CONTROLS = '<span class="tb-controls"><span class="tb-btn">_</span>' +
+  '<span class="tb-btn">□</span><span class="tb-btn">×</span></span>';
+
+// Builds the four intel windows for the current sub-phase from the config above.
+function intelWindowsHTML(content) {
+  const row = key => {
+    const f = INTEL_FIELDS[key];
+    const v = f.get(content);
+    const badge = v.badge ? `<span class="level-badge">${v.badge}</span> ` : '';
+    return `<div class="intel-row"><dt>${f.label}</dt><dd>${badge}${v.note}</dd></div>`;
+  };
+  return INTEL_WINDOWS.map(w =>
+    `<section class="window"><div class="titlebar">` +
+    `<span class="tb-caption">${w.caption}</span>${TB_CONTROLS}</div>` +
+    `<div class="window-body"><dl class="intel">${w.fields.map(row).join('')}</dl></div>` +
+    `</section>`
+  ).join('');
+}
 
 /* ================= calendar ================= */
 
@@ -471,17 +549,8 @@ function renderDashboard(data) {
   fill.style.width = Math.min(100, cl.pct / 35 * 100) + '%';
   fill.style.background = cl.color;
 
-  // intel
-  $('hormones').textContent = content.hormones;
-  $('energyLevel').textContent = content.energy.level;
-  $('energyNote').textContent = content.energy.note;
-  $('mood').textContent = content.mood;
-  $('boobSize').textContent = content.breasts.size;
-  $('boobNote').textContent = content.breasts.note;
-  $('sleepNeed').textContent = content.sleep.need;
-  $('sleepNote').textContent = content.sleep.note;
-  $('libidoLevel').textContent = content.libido.level;
-  $('libidoNote').textContent = content.libido.note;
+  // intel (four stacked windows, built from INTEL_WINDOWS)
+  $('intelWindows').innerHTML = intelWindowsHTML(content);
 
   // suggestions
   $('suggestions').innerHTML = content.suggestions
@@ -513,17 +582,15 @@ function renderPhases(data) {
     for (const sub of subs.filter(x => x.parent === seg.key)) {
       const c = SUBPHASES[sub.key];
       const now = sub.key === s.subPhase;
+      const details = Object.values(INTEL_FIELDS).map(f => {
+        const v = f.get(c);
+        const lead = v.badge ? `<strong>${v.badge}.</strong> ` : '';
+        return `<div><dt>${f.label}</dt><dd>${lead}${v.note}</dd></div>`;
+      }).join('');
       html += `<div class="subphase${now ? ' now' : ''}">` +
         `<p class="sp-title">${c.label}<span class="sp-days">${range(sub.start, sub.end)}</span>` +
         (now ? '<span class="sp-now">You are here</span>' : '') + `</p>` +
-        `<dl class="sp-details">` +
-        `<div><dt>Hormones</dt><dd>${c.hormones}</dd></div>` +
-        `<div><dt>Energy</dt><dd><strong>${c.energy.level}.</strong> ${c.energy.note}</dd></div>` +
-        `<div><dt>Mood</dt><dd>${c.mood}</dd></div>` +
-        `<div><dt>Boobs</dt><dd><strong>${c.breasts.size}.</strong> ${c.breasts.note}</dd></div>` +
-        `<div><dt>Sleep</dt><dd><strong>${c.sleep.need}.</strong> ${c.sleep.note}</dd></div>` +
-        `<div><dt>Horniness</dt><dd><strong>${c.libido.level}.</strong> ${c.libido.note}</dd></div>` +
-        `</dl>` +
+        `<dl class="sp-details">${details}</dl>` +
         `<ul class="sp-tips">${c.suggestions.map(t => `<li>${t}</li>`).join('')}</ul>` +
         `</div>`;
     }

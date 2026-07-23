@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'cycle-companion-v13';
+const CACHE = 'cycle-companion-v15';
 const ASSETS = [
   './',
   './index.html',
